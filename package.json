@@ -1,0 +1,31 @@
+{
+  "name": "koa-busboy",
+  "version": "1.0.0",
+  "description": "Koa - Upload files with busboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominhhai/koa-busboy.git"
+  },
+  "keywords": [
+    "Koa",
+    "Busboy",
+    "Upload"
+  ],
+  "author": "Do Minh Hai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dominhhai/koa-busboy/issues"
+  },
+  "homepage": "https://github.com/dominhhai/koa-busboy#readme",
+  "devDependencies": {
+    "standard": "^10.0.2"
+  },
+  "dependencies": {
+    "append-field": "^1.0.0",
+    "busboy": "^0.2.14"
+  }
+}
