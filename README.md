@@ -20,7 +20,10 @@ const uploader = busboy(options)
 
 While, `options` is same as original [busboy](https://github.com/mscdex/busboy#api) module.
 
-However, you can specify the upload folder to save files into with `dest` option. The default upload folder is your system temp folder (`os.tmpdir()`).
+However, you can specify the following options also.
+* **dest** - _string_ - The folder to save uploaded files (Default: system temp folder - `os.tmpdir()`).
+
+* **fnDestFilename** - _function_ - The function that defines the final filename which saved on `dest` folder. The `fnDestFilename(fieldname, filename)` function will return the name of file which be saved on disk. While `fieldname` is your uploaded field's name and `filename` is your uploaded file's name. (Default: `(fieldname, filename) => Date.now() + fieldname + filename`)
 
 ### Example
 ```javascript
@@ -29,6 +32,7 @@ const koaRouter = require('koa-router')
 
 const uploader = busboy({
   dest: './upload' // default is system temp folder (`os.tmpdir()`)
+  fnDestFilename: (fieldname, filename) => uuid() + filename
 })
 const router = koaRouter()
 

@@ -3,7 +3,7 @@ const path = require('path')
 const Busboy = require('busboy')
 const appendField = require('append-field')
 
-module.exports = function (req, dest, opts = {}) {
+module.exports = function (req, dest, fnDestFilename, opts = {}) {
   return new Promise((resolve, reject) => {
     let files = []
     let fields = {}
@@ -13,7 +13,7 @@ module.exports = function (req, dest, opts = {}) {
       if (!filename) return fileStream.resume()
 
       files.push(new Promise(function (resolve, reject) {
-        let tmpName = Date.now() + fieldname + filename
+        let tmpName = fnDestFilename(fieldname, filename)
         let tmpPath = path.join(dest, path.basename(tmpName))
 
         fileStream.pipe(fs.createWriteStream(tmpPath))
