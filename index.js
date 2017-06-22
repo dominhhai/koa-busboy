@@ -1,5 +1,4 @@
 const os = require('os')
-const is = require('type-is')
 const extract = require('./extract')
 
 module.exports = function (options = {}) {
@@ -9,7 +8,9 @@ module.exports = function (options = {}) {
   }
 
   return async (ctx, next) => {
-    if (!is(ctx.req, ['multipart'])) return next()
+    if (!ctx.is('multipart')) {
+      return next()
+    }
 
     try {
       let { files, fields } = await extract(ctx.req, dest, fnDestFilename, Object.assign({}, options))
