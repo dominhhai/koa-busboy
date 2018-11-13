@@ -52,6 +52,10 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
     busboy.on('filesLimit', () => reject(new Error('LIMIT_FILE_COUNT')))
     busboy.on('fieldsLimit', () => reject(new Error('LIMIT_FIELD_COUNT')))
 
-    req.pipe(busboy)
+    if (req.rawBody) {
+      busboy.end(req.rawBody)
+    } else {
+      req.pipe(busboy);
+    }
   })
 }
