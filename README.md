@@ -25,6 +25,8 @@ However, you can specify the following options also.
 
 * **fnDestFilename** - _function_ - The function that defines the final filename which saved on `dest` folder. The `fnDestFilename(fieldname, filename)` function will return the name of file which be saved on disk. While `fieldname` is your uploaded field's name and `filename` is your uploaded file's name. (Default: `(fieldname, filename) => Date.now() + fieldname + filename`)
 
+* **acceptMimeTypes** - _Array_ - A list of [mimetypes](https://www.iana.org/assignments/media-types/media-types.xhtml) that are accepted, default is to accept all.
+
 ### Example
 ```javascript
 const busboy = require('koa-busboy')
@@ -33,7 +35,7 @@ const koaRouter = require('koa-router')
 const uploader = busboy({
   dest: './upload' // default is system temp folder (`os.tmpdir()`)
   fnDestFilename: (fieldname, filename) => uuid() + filename,
-  acceptMimeTypes: ['image/gif', 'image/jpeg'] //default accept all
+  acceptMimeTypes: ['image/gif', 'image/jpeg'] //only gif and jpeg files are uploded
 })
 const router = koaRouter()
 
