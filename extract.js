@@ -12,8 +12,8 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
     busboy.on('file', (fieldname, fileStream, filename, encoding, mimetype) => {
       if (!filename) return fileStream.resume()
       
-      if (opts.acceptMimeTypes.length  > 0 && opts.acceptMimeTypes.indexOf(mimetype) < 0) {
-        reject(new Error('UNSUPPORTED_MIMETYPE'))
+      if (opts.acceptMimeTypes.length > 0 && opts.acceptMimeTypes.indexOf(mimetype) < 0) {
+        appendField(fields, "uploadError", `UNSUPPORTED_MIMETYPE: ${mimetype}`)
         return fileStream.resume();
       }
     
