@@ -11,7 +11,12 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
     let busboy = new Busboy(Object.assign({}, opts, {headers: req.headers}))
     busboy.on('file', (fieldname, fileStream, filename, encoding, mimetype) => {
       if (!filename) return fileStream.resume()
-
+      
+      if (opts.acceptMimeTypes.length > 0 && opts.acceptMimeTypes.indexOf(mimetype) < 0) {
+        appendField(fields, "uploadError", `UNSUPPORTED_MIMETYPE: ${mimetype}`)
+        return fileStream.resume();
+      }
+    
       files.push(new Promise(function (resolve, reject) {
         let tmpName = fnDestFilename(fieldname, filename)
         let tmpPath = path.join(dest, path.basename(tmpName))
