@@ -32,7 +32,8 @@ const koaRouter = require('koa-router')
 
 const uploader = busboy({
   dest: './upload' // default is system temp folder (`os.tmpdir()`)
-  fnDestFilename: (fieldname, filename) => uuid() + filename
+  fnDestFilename: (fieldname, filename) => uuid() + filename,
+  acceptMimeTypes: ['image/gif', 'image/jpeg'] //default accept all
 })
 const router = koaRouter()
 
