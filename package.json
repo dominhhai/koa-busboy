@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "append-field": "^1.0.0",
-    "busboy": "^0.2.14"
+    "busboy": "^1.6"
   }
 }

@@ -8,8 +8,9 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
     let files = []
     let fields = {}
 
-    let busboy = new Busboy(Object.assign({}, opts, {headers: req.headers}))
-    busboy.on('file', (fieldname, fileStream, filename, encoding, mimetype) => {
+    let busboy = Busboy(Object.assign({}, opts, {headers: req.headers}))
+    busboy.on('file', (fieldname, fileStream, info) => {
+      const { filename, encoding, mimeType } = info;
       if (!filename) return fileStream.resume()
 
       files.push(new Promise(function (resolve, reject) {
@@ -23,7 +24,7 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
             rs.fieldname = fieldname
             rs.filename = filename
             rs.encoding = encoding
-            rs.mimetype = mimetype
+            rs.mimetype = mimeType
 
             resolve(rs)
           })
