@@ -19,7 +19,7 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
 
         fileStream.pipe(fs.createWriteStream(tmpPath))
           .on('error', reject)
-          .on('finish', () => {
+          .on('close', () => {
             let rs = fs.createReadStream(tmpPath)
             rs.fieldname = fieldname
             rs.filename = filename
@@ -38,7 +38,7 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
       appendField(fields, name, value)
     })
 
-    busboy.on('finish', () => {
+    busboy.on('close', () => {
       if (files.length) {
         Promise.all(files)
           .then(files => resolve({ fields, files }))
