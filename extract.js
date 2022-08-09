@@ -8,8 +8,9 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
     let files = []
     let fields = {}
 
-    let busboy = new Busboy(Object.assign({}, opts, {headers: req.headers}))
-    busboy.on('file', (fieldname, fileStream, filename, encoding, mimetype) => {
+    let busboy = Busboy(Object.assign({}, opts, {headers: req.headers}))
+    busboy.on('file', (fieldname, fileStream, info) => {
+      const { filename, encoding, mimeType } = info;
       if (!filename) return fileStream.resume()
       
       if (opts.acceptMimeTypes.length > 0 && opts.acceptMimeTypes.indexOf(mimetype) < 0) {
@@ -23,12 +24,12 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
 
         fileStream.pipe(fs.createWriteStream(tmpPath))
           .on('error', reject)
-          .on('finish', () => {
+          .on('close', () => {
             let rs = fs.createReadStream(tmpPath)
             rs.fieldname = fieldname
             rs.filename = filename
             rs.encoding = encoding
-            rs.mimetype = mimetype
+            rs.mimetype = mimeType
 
             resolve(rs)
           })
@@ -42,7 +43,7 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
       appendField(fields, name, value)
     })
 
-    busboy.on('finish', () => {
+    busboy.on('close', () => {
       if (files.length) {
         Promise.all(files)
           .then(files => resolve({ fields, files }))

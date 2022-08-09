@@ -1,6 +1,6 @@
 {
   "name": "koa-busboy",
-  "version": "1.2.0",
+  "version": "1.6.0",
   "description": "Koa - Upload files with busboy",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "append-field": "^1.0.0",
-    "busboy": "^0.2.14"
+    "busboy": "^1.6"
   }
 }
