@@ -13,8 +13,8 @@ module.exports = function (req, dest, fnDestFilename, opts = {}) {
       const { filename, encoding, mimeType } = info;
       if (!filename) return fileStream.resume()
       
-      if (opts.acceptMimeTypes.length > 0 && opts.acceptMimeTypes.indexOf(mimetype) < 0) {
-        appendField(fields, "uploadError", `UNSUPPORTED_MIMETYPE: ${mimetype}`)
+      if (opts.acceptMimeTypes.length > 0 && opts.acceptMimeTypes.indexOf(mimeType) < 0) {
+        appendField(fields, "uploadError", `UNSUPPORTED_MIMETYPE: ${mimeType}`)
         return fileStream.resume();
       }
     
